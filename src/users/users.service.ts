@@ -27,14 +27,21 @@ export class UsersService {
     }
 
     async findOne(id: string): Promise<any> {
-        const user = await this.usersRepository.findOne({username: id});
+        const user = await this.usersRepository.findOne({
+            where: {
+                username: id,
+            },
+            relations: ["reviews_by_me", "others_reviews"],
+            order: {
+                updated_at: 'DESC',
+            },
+        });
         if (!user) throw  new NotFoundException("User with that id not found");
         else return user;
     }
 
     async search(username: string) {
         const user = await this.usersRepository.findOne({username: username});
-        console.log(user)
         if (user) return user;
         else {
             const token = 'AAAAAAAAAAAAAAAAAAAAAPJ4VAEAAAAAkDNY0ky0h3uwsHBl6Ugn4WYU7Eo%3DlwrPxVlqlVw2BeotB2Ip8TvEVcQrwOLUTpmpeIPz9mCC3aA1xa';
@@ -50,7 +57,7 @@ export class UsersService {
                                 `Bearer ${token}`
                         }
                     });
-                if(response.data.data[0]) {
+                if (response.data.data[0]) {
                     await this.create(response.data.data[0])
                 }
                 return response.data;
@@ -58,16 +65,12 @@ export class UsersService {
                 if (error && error.code === 'ER_DUP_ENTRY') {
                     // maybe send BAD_REQUEST to client
                 }
-                console.log(error)
                 // throw new Error(error.message);
             }
         }
     }
 
-    async update(
-        id: string,
-        body: Partial<User>
-    ) {
+    async update(id: string, body: Partial<User>) {
         const user = await this.findOne(id);
         Object.assign(user, body);
         return this.usersRepository.save(user);

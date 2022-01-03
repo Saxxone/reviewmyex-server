@@ -1,12 +1,20 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, BaseEntity } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  BaseEntity,
+  UpdateDateColumn,
+  DeleteDateColumn, CreateDateColumn
+} from "typeorm";
 import { Review } from "../../reviews/entities/review.entity";
 import { Exclude } from "class-transformer";
 
 @Entity()
 export class User extends BaseEntity {
-  @Exclude()
-  @PrimaryGeneratedColumn('uuid')
-  pid: number;
+  // @Exclude()
+  // @PrimaryGeneratedColumn('uuid')
+  // pid: number;
 
   @Column({
     nullable: true
@@ -31,6 +39,7 @@ export class User extends BaseEntity {
 
   @Column({
     unique: true,
+    primary: true,
     nullable: false
   })
   username: string;
@@ -53,6 +62,17 @@ export class User extends BaseEntity {
   @OneToMany((type) => Review, (review) => review.review_by)
   others_reviews: Review[];
 
+  @Exclude()
   @Column({ default: true })
   is_active: boolean;
+
+  @UpdateDateColumn()
+  updated_at: string;
+
+  @Exclude()
+  @DeleteDateColumn()
+  deleted_at: string;
+
+  @CreateDateColumn()
+  created_at: string;
 }

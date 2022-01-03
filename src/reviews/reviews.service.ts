@@ -13,8 +13,11 @@ export class ReviewsService {
   ) {
   }
 
-  create(createReviewDto: CreateReviewDto) {
-    return this.reviewsRepository.create();
+  create(body: CreateReviewDto) {
+    const review = this.reviewsRepository.create(body);
+    review.review_by = body.review_by
+    review.review_for = body.review_for
+    return this.reviewsRepository.save(review);
   }
 
   findAll() {

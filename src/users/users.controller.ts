@@ -32,7 +32,6 @@ export class UsersController {
 
   @Get('/search/:id')
   search(@Param('id') id: string) {
-    console.log(this.usersService.search(id))
     return this.usersService.search(id);
   }
 

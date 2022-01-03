@@ -18,8 +18,8 @@ export class ReviewsController {
   }
 
   @Post("/create")
-  create(@Body() createReviewDto: CreateReviewDto) {
-    return this.reviewsService.create(createReviewDto);
+  create(@Body() body: CreateReviewDto) {
+    return this.reviewsService.create(body);
   }
 
   @Get("/get-all-reviews")
