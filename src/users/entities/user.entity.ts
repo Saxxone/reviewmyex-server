@@ -56,10 +56,10 @@ export class User extends BaseEntity {
   })
   average_rating: string;
 
-  @OneToMany((type) => Review, (review) => review.review_for)
+  @OneToMany((type) => Review, (review) => review.review_by)
   reviews_by_me: Review[];
 
-  @OneToMany((type) => Review, (review) => review.review_by)
+  @OneToMany((type) => Review, (review) => review.review_for)
   others_reviews: Review[];
 
   @Exclude()

@@ -14,7 +14,9 @@ export class Review extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column()
+    @Column({
+        type: "text"
+    })
     content: string;
 
     @ManyToOne(() => User, (user) => user.reviews_by_me, {cascade: true})

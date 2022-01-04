@@ -15,8 +15,7 @@ export class ReviewsService {
 
   create(body: CreateReviewDto) {
     const review = this.reviewsRepository.create(body);
-    review.review_by = body.review_by
-    review.review_for = body.review_for
+    console.log(review, body)
     return this.reviewsRepository.save(review);
   }
 

@@ -5,7 +5,9 @@ export class CreateReviewDto {
     @IsString()
     content?: string;
 
+    @IsString()
     review_by?: User;
 
+    @IsString()
     review_for?: User;
 }
