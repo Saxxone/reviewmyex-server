@@ -22,11 +22,14 @@ export class UsersService {
         return this.usersRepository.save(user);
     }
 
-    findAll(): Promise<User[]> {
-        return this.usersRepository.find();
+    findAll(page, size): Promise<User[]> {
+        return this.usersRepository.find({
+            take: page,
+            skip: size
+        });
     }
 
-    async findOne(id: string): Promise<any> {
+    async findOne(id: string): Promise<User> {
         const user = await this.usersRepository.findOne({
             where: {
                 username: id,
